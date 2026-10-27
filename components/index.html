@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>For You ❤️</title>
+</head>
+<body>
+
+  <audio id="bg-music" loop preload="metadata">
+    <source src="../audio/Just%20Because%20%5B4Q5fgDPqwgA%5D.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Step 1: Closed Envelope View (Ensures Audio Permission) -->
+  <div id="envelope" class="envelope-container">
+    <div class="flowers">✉️🌹</div>
+    <h1>You have a special message...</h1>
+    <p>I made something for you sthandwa sami to say thank you for checking up on me yesterday.</p>
+    <button onclick="openCard()">Open with Music 🎵</button>
+  </div>
+
+  <!-- Step 2: The Main Interactive Card Content -->
+  <div id="main-card" class="envelope-container card" style="display: none;">
+    <div class="flowers">🌹🌸💐</div>
+    <h1>MaNgwenya, My Love</h1>
+    
+    <p>
+      The space we had since the 15th felt incredibly heavy, but seeing your smile and your video call yesterday brought all the light back into my world.
+    </p>
+
+    <div class="photo-container">
+      <img src="../images/IMG-20261027-WA0025.jpg" alt="Our Picture">
+    </div>
+
+    <div class="memories-box">
+      <strong>Just Because I Do...</strong><br><br>
+      • I love the history and depth we share.<br>
+      • I love how effortlessly your call turned my whole week around.<br>
+      • Like the song says: You're a diamond in my mind, a treasure found.
+    </div>
+
+    <button onclick="toggleMusic()">Pause / Play Music 🎵</button>
+  </div>
+
+  <!-- Small floating music status icon -->
+  <div id="music-status" class="audio-control" style="display: none;">
+    <span class="music-wave"></span>
+    <span>Playing: Just Because - Anita Baker</span>
+  </div>
+
+  <script>
+    const music = document.getElementById('bg-music');
+    const musicStatus = document.querySelector('#music-status span:last-child');
+    const musicWave = document.querySelector('.music-wave');
+
+    music.addEventListener('play', () => {
+      musicStatus.textContent = 'Playing: Just Because - Anita Baker';
+      musicWave.style.animationPlayState = 'running';
+    });
+
+    music.addEventListener('pause', () => {
+      musicStatus.textContent = 'Paused: Just Because - Anita Baker';
+      musicWave.style.animationPlayState = 'paused';
+    });
+
+    music.addEventListener('error', () => {
+      musicStatus.textContent = 'Unable to load the music file';
+      console.error('Unable to load the local music file:', music.currentSrc);
+    });
+
+    function playAudio() {
+      music.play().catch(error => {
+        musicStatus.textContent = 'Music could not start - try Play again';
+        console.error('Music playback failed:', error);
+      });
+    }
+
+    function openCard() {
+      document.getElementById('envelope').style.display = 'none';
+      document.getElementById('main-card').style.display = 'block';
+      document.getElementById('music-status').style.display = 'flex';
+      playAudio();
+    }
+
+    function toggleMusic() {
+      if (music.paused) {
+        playAudio();
+      } else {
+        music.pause();
+      }
+    }
+  </script>
+
+</body>
+</html>
